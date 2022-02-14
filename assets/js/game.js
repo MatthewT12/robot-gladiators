@@ -19,6 +19,7 @@ for(var i = 0; i < enemyNames.length; i++) {
 var enemyHealth = 50;
 var enemyAttack = 12;
 
+
 // game states
 // "WIN" - player robot has defeated all the enemies
 //      * fight all the enemies
@@ -26,11 +27,10 @@ var enemyAttack = 12;
 // "LOSE" - player robot's health is zero or less
 
 var fight = function(enemyName) {
-    while(playerHealth > 0 && enemyHealth > 0) {
+    while (playerHealth > 0 && enemyHealth > 0) {
         // alert players that they are starting the round
-        // window.alert("Welcome to Robot Gladiators!")
-    
-        var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'Fight' or 'SKIP' to choose.")
+        
+        var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'Fight' or 'SKIP' to choose.");
 
         if (promptFight === "skip" || promptFight === "SKIP") {
             // confirm player wants to skip
@@ -45,8 +45,9 @@ var fight = function(enemyName) {
                 break;
             }
         }
-        // if player chooses to fight, then fight
+       
         if (promptFight === "fight" || promptFight === "FIGHT") {
+
         // subtract the value of playerAttack from the value of enemyHealth and use that result to update the value in the enemyHealth variable
         enemyHealth = enemyHealth - playerAttack;
     
@@ -81,14 +82,20 @@ var fight = function(enemyName) {
         else {
         window.alert(playerName + " still has " + playerHealth + " health remaning.");
         }
-        }
+        }   
 
 
         
     }
 };
-for(var i = 0; i < enemyNames.length; i++) {
-    var pickedEnemyName = enemyNames[i];
-    enemyHealth = 50;
-    fight(pickedEnemyName);
+for (var i = 0; i < enemyNames.length; i++) {
+    if (playerHealth > 0) {
+        window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
+        var pickedEnemyName = enemyNames[i];
+        enemyHealth = 50;
+        fight(pickedEnemyName);
+    } else {
+        window.alert("You have lost your robot in battle! Game Over!");
+        break;
+    }
 }
