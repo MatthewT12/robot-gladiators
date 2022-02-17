@@ -40,7 +40,8 @@ var fight = function(enemyName) {
             if (confirmSkip) {
                 window.alert(playerName + " has chosen to skip this fight. Goodbye!");
                 // subtract money from playerMoney for skipping
-                playerMoney = playerMoney - 10;
+                //playerMoney = playerMoney - 10;
+                playerMoney = Math.max(0, playerMoney - 10);
                 console.log("playerMoney", playerMoney);
                 break;
             }
@@ -49,7 +50,11 @@ var fight = function(enemyName) {
         if (promptFight === "fight" || promptFight === "FIGHT") {
 
         // subtract the value of playerAttack from the value of enemyHealth and use that result to update the value in the enemyHealth variable
-        enemyHealth = enemyHealth - playerAttack;
+        //enemyHealth = enemyHealth - playerAttack;
+        
+        // generate random damage value based on player's attack power
+        var damage = randomNumber(playerAttack - 3, playerAttack);
+        enemyHealth = Math.max(0, enemyHealth - damage);
     
         // log a resulting message to the console so we know that it worked
         console.log(
@@ -66,7 +71,11 @@ var fight = function(enemyName) {
         }
 
         // subtract the value of enemyAttack from the value of playerHealth and use that reult to update the value in the playerHealth variable
-        playerHealth = playerHealth - enemyAttack;
+        //playerHealth = playerHealth - enemyAttack;
+        
+        // generate random damage value based on enemy-robot's attack power
+        var damage = randomNumber(enemyAttack - 3, enemyAttack);
+        playerHealth = Math.max(0, playerHealth - damage);
 
         // log a resulting message to the console so we know that it worked
         console.log(
@@ -99,18 +108,23 @@ var startGame = function() {
         if (playerHealth > 0) {
             window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
             var pickedEnemyName = enemyNames[i];
-            enemyHealth = 50;
+            //enemyHealth = 50;
+            //enemyHealth = Math.floor(Math.random() * 21) + 40;
+            enemyHealth = randomNumber(40, 60);
             fight(pickedEnemyName);
             
             // if player is still alive and we're not at the last enemy in the array
             if (playerHealth > 0 && i < enemyNames.length - 1) {
+                window.alert("Gongratulations, you've earned 10 dollars!");
+                playerMoney = playerMoney + 10;
                 // ask if player wants to use the store before next round
                 var storeConfirm = window.confirm("The fight is over. Do you want to visit the store before the next round?");
                 
                 // if yes, take them to the store() function
                 if (storeConfirm) {
                     shop();
-                }    
+                }
+                   
             }
         } 
         else {
@@ -202,5 +216,17 @@ var shop = function() {
             break;
     }
 }
+
+// function to generate a random numeric value
+var randomNumber = function(min, max) {
+    var value = Math.floor(Math.random() * (max - min + 1) + min);
+
+    return value;
+};
 // start the game when the page loads
-startGame();    
+startGame();
+/*console.log(Math.PI);
+console.log(Math.round(4.4));
+console.log(Math.sqrt(25));*/
+/*console.log(Math.max(10, 20, 100));
+console.log(Math.max(0, -50));*/    
